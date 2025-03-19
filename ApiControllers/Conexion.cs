@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using MongoDB.Driver;
+
 [ApiController]
 [Route  ("conexion")]
 
@@ -33,11 +35,12 @@ public class Conexion : Controller {
 
     [HttpGet("mongo")]
     public IActionResult ListarSalonesMongoDb(){
-        MongoClient client = new MongoClient(CadenasConexion.Mongo_DB);
-        var db = client.GetDatabase("Practica2_Alejandro_Luis");
+        MongoClient client = new MongoClient(CadenasConexion.MONGO_DB);
+        var db = client.GetDatabase("Practica2_Ivan");
         var collection = db.GetCollection<SalonMongo>("Salones");
 
         var lista = collection.Find(FilterDefinition<SalonMongo>.Empty).ToList();
-         return Ok(lista);
+
+        return Ok(lista);
     }
 }
